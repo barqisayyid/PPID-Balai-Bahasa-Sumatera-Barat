@@ -1,0 +1,17 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --color-ink: #0F2A4A;
+    --color-paper: #F7F4ED;
+    --color-gold: #C89B3C;
+    --color-lado: #A43B3B;
+    --font-serif: 'Fraunces', serif;
+    --font-sans: '"Plus Jakarta Sans"', sans-serif;
+}
+
+[x-cloak] { display: none !important; }

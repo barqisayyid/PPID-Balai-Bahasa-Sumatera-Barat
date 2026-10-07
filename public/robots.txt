@@ -1,0 +1,13 @@
+User-agent: *
+
+# Blokir halaman admin & autentikasi dari mesin pencari
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /logout
+
+# Izinkan halaman publik diindeks
+Allow: /
+
+# Ganti dengan domain asli saat live
+# Sitemap: https://namadomain.go.id/sitemap.xml
