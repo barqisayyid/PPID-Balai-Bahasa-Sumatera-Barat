@@ -28,6 +28,8 @@ function getDokumen() {
 
 Route::get('/', function () { return view('pages.beranda'); })->name('main');
 Route::get('/preview-dokumen', [\App\Http\Controllers\MainController::class, 'previewDokumen'])->name('preview.dokumen');
+Route::get('/tata-cara-keberatan', function () { return view('pages.tata-cara-keberatan'); })->name('tata-cara-keberatan');
+Route::get('/tata-cara-permohonan', function () { return view('pages.tata-cara-permohonan'); })->name('tata-cara-permohonan');
 Route::get('/profil-lembaga', function () { return view('pages.profil-lembaga'); });
 Route::get('/profil-pegawai', function () { 
     $path = storage_path('app/pegawai.json');
@@ -55,6 +57,7 @@ Route::get('/form-keberatan', function () { return view('pages.form-keberatan');
 Route::get('/laporan-layanan', function () { return view('pages.laporan-layanan'); });
 Route::get('/pengaduan', function () { return view('pages.pengaduan'); });
 Route::get('/satu-data', function () { return view('pages.satu-data'); });
+Route::get('/cek-status', [\App\Http\Controllers\MainController::class, 'cekStatus'])->name('cek-status');
 
 // Form submission routes
 Route::post('/formulir/permohonan', [FormulirController::class, 'permohonan'])->name('main.storepermohonan');
@@ -124,5 +127,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('admin.activity-log');
     });
 });
+
+
 
 

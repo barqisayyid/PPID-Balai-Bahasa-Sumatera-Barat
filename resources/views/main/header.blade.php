@@ -33,6 +33,7 @@ $menus = [
         'label' => 'Layanan Informasi',
         'url' => '/layanan-informasi',
         'children' => [
+            ['label' => 'Cek Status Pengajuan', 'url' => route('cek-status')],
             ['label' => 'Formulir Permohonan Data', 'url' => '/form-permohonan'],
             ['label' => 'Formulir Keberatan', 'url' => '/form-keberatan'],
             ['label' => 'Formulir Pengaduan', 'url' => '/form-pengaduan'],
@@ -51,8 +52,8 @@ $menus = [
         'label' => 'Tata Cara',
         'url' => '#',
         'children' => [
-            ['label' => 'Permohonan Informasi', 'url' => 'https://drive.google.com/file/d/1PMtoGA_8BWApYExx2JxVdYV6MvFbtXFk/view', 'target' => '_blank'],
-            ['label' => 'Pengajuan Keberatan', 'url' => 'https://drive.google.com/file/d/1VlLXNILjGcKjlBsoiEEXYg-FwX5E6XaQ/view', 'target' => '_blank'],
+            ['label' => 'Permohonan Informasi', 'url' => route('tata-cara-permohonan')],
+            ['label' => 'Pengajuan Keberatan', 'url' => route('tata-cara-keberatan')],
         ]
     ],
     [
@@ -67,21 +68,21 @@ $menus = [
     ],
 ];
 ?>
-<header x-data="{ mobileMenuOpen: false, atTop: true }" @scroll.window="atTop = (window.pageYOffset <= 20)" :class="!atTop ? 'shadow-md backdrop-blur-xl bg-white/85 ' : 'shadow-sm bg-white '" class="sticky top-0 z-50 transition-all duration-300 ">
+<header x-data="{ mobileMenuOpen: false }" class="shadow-sm bg-white sticky top-0 z-50">
     <div class="container mx-auto px-4 xl:px-8">
-        <div class="flex justify-between items-center transition-all duration-300" :class="!atTop ? 'h-16 md:h-20' : 'h-20 md:h-24'">
+        <div class="flex justify-between items-center h-20 md:h-24">
             
             <!-- Left: Logo & PPID Identity -->
             <div class="flex-shrink-0 flex items-center gap-3 md:gap-4">
                 <a href="/" class="flex items-center group">
                     <img src="{{ asset('images/bbpsumbar.png') }}" alt="Logo Balai Bahasa Provinsi Sumatera Barat" 
-                         class="w-auto object-contain drop-shadow-sm group-hover:opacity-90 transition-all duration-300" :class="{'h-7 md:h-9': !atTop, 'h-9 md:h-11 lg:h-12': atTop}">
+                         class="w-auto object-contain drop-shadow-sm group-hover:opacity-90 transition-all duration-300 h-9 md:h-11 lg:h-12">
                 </a>
                 
                 <!-- Typographic PPID Branding -->
-                <div class="hidden sm:flex flex-col border-l-2 border-gray-200 pl-3 md:pl-4 justify-center transition-all duration-300" :class="{'py-0.5': !atTop, 'py-1': atTop}">
-                    <span class="text-[#0F2A4A] font-black tracking-tight leading-none" :class="{'text-lg': !atTop, 'text-xl md:text-2xl': atTop}">PPID</span>
-                    <span class="text-amber-500 font-bold uppercase tracking-widest leading-none mt-1" :class="{'text-[9px]': !atTop, 'text-[10px] md:text-xs': atTop}">Layanan Publik</span>
+                <div class="hidden sm:flex flex-col border-l-2 border-gray-200 pl-3 md:pl-4 justify-center py-1">
+                    <span class="text-[#0F2A4A] font-black tracking-tight leading-none text-xl md:text-2xl">PPID</span>
+                    <span class="text-amber-500 font-bold uppercase tracking-widest leading-none mt-1 text-[10px] md:text-xs">Layanan Publik</span>
                 </div>
             </div>
 
@@ -193,6 +194,8 @@ $menus = [
         </nav>
     </div>
 </header>
+
+
 
 
 

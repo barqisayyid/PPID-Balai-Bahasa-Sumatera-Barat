@@ -7,7 +7,7 @@
             active: 0, 
             slides: [
                 {
-                    image: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?q=80&w=2000&auto=format&fit=crop',
+                    image: '{{ asset('images/foto1.jpg') }}',
                     label: 'Portal Informasi Resmi',
                     title1: 'Pejabat Pengelola',
                     title2: 'Informasi & Dokumentasi',
@@ -16,7 +16,7 @@
                     btn2: { text: 'Kenali Kami', url: '/profil-lembaga', type: 'secondary' }
                 },
                 {
-                    image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?q=80&w=2000&auto=format&fit=crop',
+                    image: '{{ asset('images/foto2.jpg') }}',
                     label: 'Keterbukaan Publik',
                     title1: 'Wujudkan Transparansi',
                     title2: 'Layanan Publik',
@@ -25,7 +25,7 @@
                     btn2: { text: 'Regulasi', url: '/regulasi', type: 'secondary' }
                 },
                 {
-                    image: 'https://images.unsplash.com/photo-1517048676732-d65bc937f952?q=80&w=2000&auto=format&fit=crop',
+                    image: '{{ asset('images/foto3.jpg') }}',
                     label: 'Aspirasi & Keluhan',
                     title1: 'Saluran Pengaduan',
                     title2: 'Masyarakat',
@@ -252,6 +252,9 @@
     </div>
 </section>
 @endsection
+
+
+
 
 
 

@@ -98,6 +98,15 @@ class LayananController extends Controller
 
         $item->save();
 
+        if ($item->wasChanged('status') || $item->wasChanged('tanggapan')) {
+            try {
+                \Illuminate\Support\Facades\Mail::to($item->email)
+                    ->send(new \App\Mail\NotifikasiPengunjung($item, $jenis, true));
+            } catch (\Exception $e) {
+                \Illuminate\Support\Facades\Log::error("Gagal kirim notifikasi update status {$jenis}: " . $e->getMessage());
+            }
+        }
+
         if ($item->wasChanged('status')) {
             ActivityLog::catat(
                 aksi       : 'update_status',

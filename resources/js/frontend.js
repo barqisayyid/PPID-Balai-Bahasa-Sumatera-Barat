@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const kuat = document.createElement('strong');
             kuat.textContent = nomor;
             p.appendChild(kuat);
-            p.appendChild(document.createTextNode(' (simpan nomor ini untuk menanyakan perkembangan).'));
+            p.appendChild(document.createTextNode(' - ')); const link = document.createElement('a'); link.href = '/cek-status?nomor=' + nomor; link.className = 'text-blue-700 underline hover:text-blue-900 font-medium inline-block'; link.textContent = 'Cek Status Pengajuan \u2192'; p.appendChild(link);
             el.appendChild(p);
         }
 

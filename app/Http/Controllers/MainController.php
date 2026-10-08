@@ -33,4 +33,56 @@ class MainController extends Controller
             'Content-Disposition' => 'inline; filename="' . basename($file) . '"'
         ]);
     }
+
+    public function cekStatus(\Illuminate\Http\Request $request)
+    {
+        $nomor = $request->query('nomor');
+        $email = $request->query('email');
+        $items = collect();
+        $error = null;
+
+        if ($email) {
+            if ($nomor) {
+                $prefix = explode('-', $nomor)[0] ?? '';
+                
+                $modelClass = match($prefix) {
+                    'PMH' => \App\Models\Permohonan::class,
+                    'PGD' => \App\Models\Pengaduan::class,
+                    'KBR' => \App\Models\Keberatan::class,
+                    default => null
+                };
+
+                if ($modelClass) {
+                    $item = $modelClass::where('no_registrasi', $nomor)
+                                       ->where('email', $email)
+                                       ->first();
+                    if ($item) {
+                        $item->jenis_layanan = match($prefix) {
+                            'PMH' => 'Permohonan',
+                            'PGD' => 'Pengaduan',
+                            'KBR' => 'Keberatan',
+                            default => 'Layanan'
+                        };
+                        $items->push($item);
+                    } else {
+                        $error = 'Data tidak ditemukan. Pastikan Nomor Registrasi dan Email yang dimasukkan benar.';
+                    }
+                } else {
+                    $error = 'Format Nomor Registrasi tidak valid.';
+                }
+            } else {
+                $permohonan = \App\Models\Permohonan::where('email', $email)->get()->map(function($i) { $i->jenis_layanan = 'Permohonan'; return $i; });
+                $pengaduan = \App\Models\Pengaduan::where('email', $email)->get()->map(function($i) { $i->jenis_layanan = 'Pengaduan'; return $i; });
+                $keberatan = \App\Models\Keberatan::where('email', $email)->get()->map(function($i) { $i->jenis_layanan = 'Keberatan'; return $i; });
+                
+                $items = $permohonan->concat($pengaduan)->concat($keberatan)->sortByDesc('created_at');
+                
+                if ($items->isEmpty()) {
+                    $error = 'Tidak ada riwayat pengajuan yang ditemukan untuk email ini.';
+                }
+            }
+        }
+
+        return view('pages.cek-status', compact('items', 'nomor', 'email', 'error'));
+    }
 }

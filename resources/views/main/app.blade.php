@@ -146,7 +146,7 @@
     </style>
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
     <!-- Aksen garis emas-biru, ciri khas identitas kementerian -->
     <div class="h-1.5 w-full bg-gradient-to-r from-yellow-400 via-blue-700 to-yellow-400"></div>

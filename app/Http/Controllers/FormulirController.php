@@ -52,8 +52,12 @@ class FormulirController extends Controller
 
         // Pengiriman Notifikasi Email
         try {
+            // Notifikasi ke Admin
             Mail::to(env('PPID_ADMIN_EMAIL', config('mail.from.address')))
                 ->send(new FormulirMasuk('permohonan', $item));
+            
+            // Notifikasi Resi ke Pengunjung
+            Mail::to($item->email)->send(new \App\Mail\NotifikasiPengunjung($item, 'permohonan', false));
         } catch (\Exception $e) {
             Log::error('Gagal kirim notifikasi permohonan: ' . $e->getMessage());
         }
@@ -95,8 +99,12 @@ class FormulirController extends Controller
 
         // Pengiriman Notifikasi Email
         try {
+            // Notifikasi ke Admin
             Mail::to(env('PPID_ADMIN_EMAIL', config('mail.from.address')))
                 ->send(new FormulirMasuk('pengaduan', $item));
+            
+            // Notifikasi Resi ke Pengunjung
+            Mail::to($item->email)->send(new \App\Mail\NotifikasiPengunjung($item, 'pengaduan', false));
         } catch (\Exception $e) {
             Log::error('Gagal kirim notifikasi pengaduan: ' . $e->getMessage());
         }
@@ -151,8 +159,12 @@ class FormulirController extends Controller
 
         // Pengiriman Notifikasi Email
         try {
+            // Notifikasi ke Admin
             Mail::to(env('PPID_ADMIN_EMAIL', config('mail.from.address')))
                 ->send(new FormulirMasuk('keberatan', $item));
+            
+            // Notifikasi Resi ke Pengunjung
+            Mail::to($item->email)->send(new \App\Mail\NotifikasiPengunjung($item, 'keberatan', false));
         } catch (\Exception $e) {
             Log::error('Gagal kirim notifikasi keberatan: ' . $e->getMessage());
         }
