@@ -75,7 +75,7 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="relative px-6 pb-20 md:px-12 max-w-7xl mx-auto -mt-20 z-20">
+    <div class="relative px-0 pb-20 -mt-20 z-20">
         
         <!-- Search and Filter Bar -->
         <div class="bg-white p-6 rounded-2xl shadow-xl shadow-blue-900/5 border border-blue-50 flex flex-col lg:flex-row gap-6 justify-between items-center mb-12">
@@ -126,9 +126,9 @@
                     <!-- Decorative Batik Strip on Card -->
                     <div class="absolute top-0 right-0 w-full h-24 bg-[url('/images/motif-batik-sumbar.png')] bg-repeat-x bg-contain opacity-[0.03] pointer-events-none z-0"></div>
 
-                    <div class="w-full h-56 bg-gradient-to-br from-blue-50 to-amber-50/30 flex items-center justify-center overflow-hidden relative z-10 p-2">
+                    <div class="w-full h-64 bg-gradient-to-br from-blue-50 to-amber-50/30 flex items-center justify-center overflow-hidden relative z-10 p-2">
                         <!-- Photo Frame -->
-                        <div class="w-36 h-36 rounded-full overflow-hidden border-4 border-white shadow-md bg-white relative group-hover:border-amber-100 transition-colors">
+                        <div class="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-md bg-white relative group-hover:border-amber-100 transition-colors">
                             <template x-if="p.foto">
                                 <img :src="p.foto" :alt="p.nama" class="w-full h-full object-cover object-top group-hover:scale-110 transition-transform duration-500">
                             </template>
@@ -172,22 +172,22 @@
 
     <!-- Modal Detail Pegawai (Minang Themed) -->
     <div x-show="modalOpen" class="fixed inset-0 bg-[#0F2A4A]/80 z-50 flex items-center justify-center p-4 backdrop-blur-sm" x-cloak style="display: none;">
-        <div @click.away="closeModal()" class="bg-white rounded-3xl max-w-md w-full overflow-hidden shadow-2xl relative" x-show="modalOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-8">
+        <div @click.away="closeModal()" class="bg-white rounded-3xl max-w-sm w-full overflow-hidden shadow-2xl relative" x-show="modalOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-90 translate-y-8" x-transition:enter-end="opacity-100 scale-100 translate-y-0" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 scale-100 translate-y-0" x-transition:leave-end="opacity-0 scale-95 translate-y-8">
             
             <!-- Close button -->
             <button @click="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-black/20 hover:bg-black/40 backdrop-blur-md rounded-full flex items-center justify-center text-white transition-all z-20">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
             </button>
             
-            <div class="relative h-48 bg-[#0F2A4A] overflow-hidden">
+            <div class="relative h-56 bg-[#0F2A4A] overflow-hidden">
                 <!-- Motif -->
                 <div class="absolute inset-0 bg-[url('/images/motif-batik-sumbar.png')] bg-repeat-x bg-contain opacity-20 z-0"></div>
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0F2A4A] to-transparent z-10"></div>
             </div>
 
-            <div class="px-8 pb-10 pt-0 relative z-20" x-if="selectedPegawai">
+            <div class="px-6 pb-10 pt-0 relative z-20" x-if="selectedPegawai">
                 <!-- Avatar overlapping header -->
-                <div class="w-32 h-32 bg-white rounded-full mx-auto -mt-16 mb-5 p-1.5 shadow-xl">
+                <div class="w-56 h-56 bg-white rounded-full mx-auto -mt-28 mb-6 p-2 shadow-xl">
                     <div class="w-full h-full rounded-full overflow-hidden bg-blue-50">
                         <template x-if="selectedPegawai && selectedPegawai.foto">
                             <img :src="selectedPegawai.foto" :alt="selectedPegawai.nama" class="w-full h-full object-cover object-top">

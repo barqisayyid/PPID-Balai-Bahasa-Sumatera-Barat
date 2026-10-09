@@ -18,12 +18,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActivityLogController;
 
 // Helper function to fetch dokumen
-function getDokumen() {
-    return Informasi::tampil()
-        ->orderByDesc('tahun')
-        ->orderBy('id')
-        ->get()
-        ->groupBy('kategori');
+if (! function_exists('getDokumen')) {
+    function getDokumen() {
+        return Informasi::tampil()
+            ->orderByDesc('tahun')
+            ->orderBy('id')
+            ->get()
+            ->groupBy('kategori');
+    }
 }
 
 Route::get('/', function () { return view('pages.beranda'); })->name('main');
@@ -36,9 +38,24 @@ Route::get('/profil-pegawai', function () {
     $pegawai = json_decode(file_get_contents($path), true);
     return view('pages.profil-pegawai', compact('pegawai')); 
 });
+Route::get('/agenda-kegiatan', function (\Illuminate\Http\Request $request) { 
+    $query = \App\Models\Agenda::query();
+    
+    if ($request->has('cari') && $request->cari != '') {
+        $cari = $request->cari;
+        $query->where('kegiatan', 'like', "%{$cari}%")
+              ->orWhere('deskripsi', 'like', "%{$cari}%")
+              ->orWhere('tempat', 'like', "%{$cari}%");
+    }
+
+    $agenda = $query->orderBy('tanggal', 'desc')->get();
+    return view('pages.agenda-kegiatan', compact('agenda')); 
+});
+Route::get('/profil-pengembang', function () { return view('pages.profil-pengembang'); });
 Route::get('/tugas-fungsi', function () { return view('pages.tugas-fungsi'); });
 Route::get('/visi-misi', function () { return view('pages.visi-misi'); });
 Route::get('/informasi-publik', function () { return view('pages.informasi-publik'); });
+Route::get('/informasi-dikecualikan', function () { return view('pages.informasi-dikecualikan'); });
 Route::get('/struktur-organisasi', function () { return view('pages.struktur-organisasi'); });
 Route::get('/struktur-ppid', function () { return view('pages.struktur-ppid'); });
 Route::get('/layanan-ahli-bahasa', function () { return view('pages.layanan-ahli-bahasa'); });
@@ -114,6 +131,9 @@ Route::middleware('auth')->group(function () {
                 Route::get('/{id}/lampiran', [LayananController::class, 'lampiran'])->defaults('jenis', $jenis)->name('lampiran');
             });
         }
+
+        // Agenda Routes
+        Route::resource('agenda', \App\Http\Controllers\Admin\AgendaController::class)->names('admin.agenda');
 
         // User Routes
         Route::resource('pengguna', UserController::class);

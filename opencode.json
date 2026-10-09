@@ -1,0 +1,27 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "model": "bansos/deepseek-flash",
+    "provider": {
+        "bansos": {
+            "npm": "@ai-sdk/openai",
+            "options": {
+                "baseURL": "https://router.yamanomusume.my.id/v1",
+                "apiKey": "sk-bf27de16413b4fdb-c8bc18e1-ddadeb"
+            },
+            "models": {
+                "deepseek-flash": {
+                    "id": "rb/deepseek/deepseek-v4.1-flash",
+                    "name": "DeepSeek V4.1 Flash"
+                },
+                "gpt-luna": {
+                    "id": "rb/openai/gpt-6-luna",
+                    "name": "GPT 6 Luna"
+                },
+                "glm-flash": {
+                    "id": "rb/z-ai/glm-5.3-flash",
+                    "name": "GLM 5.3 Flash"
+                }
+            }
+        }
+    }
+}

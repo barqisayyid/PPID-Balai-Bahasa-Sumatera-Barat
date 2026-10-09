@@ -15,6 +15,7 @@ $menus = [
             ['label' => 'Visi dan Misi', 'url' => '/visi-misi'],
             ['label' => 'Struktur Organisasi', 'url' => '/struktur-organisasi'],
             ['label' => 'Struktur PPID', 'url' => '/struktur-ppid'],
+            ['label' => 'Profil Pengembang', 'url' => '/profil-pengembang'],
         ]
     ],
     [
@@ -27,6 +28,7 @@ $menus = [
             ['label' => 'Informasi Kebijakan', 'url' => '/regulasi'],
             ['label' => 'Informasi Data Statistik', 'url' => '/capaian'],
             ['label' => 'Informasi Keuangan', 'url' => '/keuangan'],
+            ['label' => 'Informasi Dikecualikan', 'url' => '/informasi-dikecualikan'],
         ]
     ],
     [

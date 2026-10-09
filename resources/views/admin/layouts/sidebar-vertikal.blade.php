@@ -9,6 +9,7 @@
             ['title' => 'Regulasi / Kebijakan', 'icon' => 'solar:book-2-bold-duotone',         'route' => 'informasi.index', 'params' => ['kategori' => 'kebijakan']],
             ['title' => 'Informasi Keuangan',   'icon' => 'solar:wallet-2-line-duotone',       'route' => 'informasi.index', 'params' => ['kategori' => 'keuangan']],
             ['title' => 'Program & Kegiatan',   'icon' => 'solar:clipboard-list-bold-duotone', 'route' => 'informasi.index', 'params' => ['kategori' => 'program']],
+            ['title' => 'Agenda Kegiatan',      'icon' => 'solar:calendar-date-bold-duotone',  'route' => 'admin.agenda.index', 'params' => []],
             ['title' => 'Statistik & Capaian',  'icon' => 'solar:chart-2-bold-duotone',        'route' => 'informasi.index', 'params' => ['kategori' => 'statistik']],
         ]],
         ['label' => 'Layanan Masuk', 'items' => [

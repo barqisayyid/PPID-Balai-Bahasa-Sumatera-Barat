@@ -49,11 +49,11 @@
     </div>
 
     <!-- Main Content Area -->
-    <div class="relative px-6 py-12 md:px-16 md:py-16 max-w-5xl mx-auto -mt-6 mb-8">
+    <div class="relative px-6 py-12 md:px-16 md:py-16 -mt-6 mb-8">
         <!-- Overlay Card Effect -->
         <div class="absolute inset-0 bg-white shadow-[0_-10px_40px_rgba(0,0,0,0.08)] rounded-3xl border border-gray-100 -z-10"></div>
 
-        <div class="space-y-8 text-gray-700 text-lg leading-loose">
+        <div class="space-y-8 text-gray-700 text-lg leading-loose max-w-4xl mx-auto">
             
             <p class="text-justify first-letter:text-6xl first-letter:font-black first-letter:text-[#0F2A4A] first-letter:float-left first-letter:mr-3 first-letter:mt-2">
                 Balai Bahasa Provinsi Sumatera Barat merupakan unit pelaksana teknis Kementerian Pendidikan Dasar dan
