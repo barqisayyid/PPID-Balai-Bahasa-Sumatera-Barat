@@ -16,7 +16,7 @@
                     btn2: { text: 'Kenali Kami', url: '/profil-lembaga', type: 'secondary' }
                 },
                 {
-                    image: '{{ asset('images/foto2.jpg') }}',
+                    image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=1600&auto=format&fit=crop',
                     label: 'Keterbukaan Publik',
                     title1: 'Wujudkan Transparansi',
                     title2: 'Layanan Publik',
@@ -25,7 +25,7 @@
                     btn2: { text: 'Regulasi', url: '/regulasi', type: 'secondary' }
                 },
                 {
-                    image: '{{ asset('images/foto3.jpg') }}',
+                    image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?q=80&w=1600&auto=format&fit=crop',
                     label: 'Aspirasi & Keluhan',
                     title1: 'Saluran Pengaduan',
                     title2: 'Masyarakat',

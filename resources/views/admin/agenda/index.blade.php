@@ -1,31 +1,40 @@
 @extends('admin.layouts.app')
 
+@section('title', 'Kelola Agenda Kegiatan')
+
 @section('content')
-<div class="card shadow-sm border-0">
-    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-        <h5 class="mb-0 text-primary fw-bold">Kelola Agenda Kegiatan</h5>
-        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
-            <iconify-icon icon="solar:add-circle-bold-duotone" class="fs-5 me-1"></iconify-icon> Tambah Agenda
-        </button>
-    </div>
+<div class="card">
     <div class="card-body">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+            <div>
+                <h4 class="card-title mb-1">Kelola Agenda Kegiatan</h4>
+                <p class="text-muted mb-0">
+                    {{ $agendas->count() }} agenda terdaftar
+                </p>
+            </div>
+            <button type="button" class="btn btn-primary d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                <iconify-icon icon="solar:add-circle-bold-duotone" class="fs-5 me-1"></iconify-icon> 
+                Tambah Agenda
+            </button>
+        </div>
+
         <div class="table-responsive">
-            <table class="table table-hover align-middle border">
-                <thead class="table-light">
+            <table id="tabel-agenda" class="table table-striped align-middle w-100">
+                <thead>
                     <tr>
-                        <th class="text-center" width="5%">No</th>
+                        <th style="width: 50px">No</th>
                         <th>Tanggal</th>
                         <th>Waktu</th>
                         <th>Kegiatan</th>
                         <th>Tempat</th>
                         <th>Status</th>
-                        <th class="text-center" width="15%">Aksi</th>
+                        <th class="text-end" style="width: 130px">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($agendas as $agenda)
                     <tr>
-                        <td class="text-center">{{ $loop->iteration }}</td>
+                        <td>{{ $loop->iteration }}</td>
                         <td>{{ \Carbon\Carbon::parse($agenda->tanggal)->locale('id')->isoFormat('D MMMM YYYY') }}</td>
                         <td>{{ $agenda->waktu ?? '-' }}</td>
                         <td class="fw-bold">{{ $agenda->kegiatan }}</td>
@@ -35,16 +44,12 @@
                                 {{ $agenda->status }}
                             </span>
                         </td>
-                        <td class="text-center">
-                            <button type="button" class="btn btn-sm btn-light-warning text-warning me-1" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $agenda->id }}">
-                                <iconify-icon icon="solar:pen-bold-duotone"></iconify-icon>
-                            </button>
-                            <form action="{{ route('admin.agenda.destroy', $agenda->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus agenda ini?')">
+                        <td class="text-end text-nowrap">
+                            <button type="button" class="btn btn-sm btn-outline-primary me-1" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $agenda->id }}">Ubah</button>
+                            <form action="{{ route('admin.agenda.destroy', $agenda->id) }}" method="POST" class="d-inline" data-confirm="Yakin ingin menghapus agenda ini?">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-light-danger text-danger">
-                                    <iconify-icon icon="solar:trash-bin-trash-bold-duotone"></iconify-icon>
-                                </button>
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
                             </form>
                         </td>
                     </tr>
@@ -52,7 +57,7 @@
                     <!-- Modal Edit -->
                     <div class="modal fade" id="modalEdit{{ $agenda->id }}" tabindex="-1">
                         <div class="modal-dialog">
-                            <form action="{{ route('admin.agenda.update', $agenda->id) }}" method="POST" class="modal-content">
+                            <form action="{{ route('admin.agenda.update', $agenda->id) }}" method="POST" class="modal-content text-start">
                                 @csrf
                                 @method('PUT')
                                 <div class="modal-header">
@@ -156,3 +161,25 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script>
+        $(function () {
+            $('#tabel-agenda').DataTable({
+                order: [],                       // pertahankan urutan dari server (tanggal terbaru dulu)
+                pageLength: 25,
+                columnDefs: [{ orderable: false, targets: -1 }],
+                language: {
+                    search: 'Cari:',
+                    lengthMenu: 'Tampilkan _MENU_ data',
+                    info: 'Menampilkan _START_–_END_ dari _TOTAL_ data',
+                    infoEmpty: 'Tidak ada data',
+                    infoFiltered: '(disaring dari _MAX_ data)',
+                    zeroRecords: 'Tidak ada data yang cocok',
+                    emptyTable: 'Belum ada agenda. Klik "Tambah Agenda" untuk memulai.',
+                    paginate: { first: 'Awal', last: 'Akhir', next: 'Berikutnya', previous: 'Sebelumnya' }
+                }
+            });
+        });
+    </script>
+@endpush

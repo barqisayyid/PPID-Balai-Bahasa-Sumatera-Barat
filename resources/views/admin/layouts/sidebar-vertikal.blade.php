@@ -18,7 +18,7 @@
             ['title' => 'Keberatan',            'icon' => 'solar:shield-warning-bold-duotone',  'route' => 'keberatan.index',  'params' => []],
         ]],
         
-                ['label' => 'Akun', 'items' => [
+        ['label' => 'Akun', 'items' => [
             ['title' => 'Profil Saya', 'icon' => 'solar:user-circle-bold-duotone', 'route' => 'profile.edit', 'params' => []],
             ['title' => 'Kelola Pengguna', 'icon' => 'solar:users-group-rounded-bold-duotone', 'route' => 'pengguna.index', 'params' => [], 'admin' => true],
             ['title' => 'Log Aktivitas', 'icon' => 'solar:history-bold-duotone', 'route' => 'admin.activity-log', 'params' => [], 'admin' => true],
@@ -34,12 +34,12 @@
         </a>
     </div>
 
-    <div class="scroll-sidebar" data-simplebar>
+    <!-- Area Menu Scrollable -->
+    <div class="scroll-sidebar" data-simplebar style="height: calc(100% - 160px);">
         <nav class="sidebar-nav">
             <ul id="sidebarnav" class="mb-0">
                 @foreach ($menu as $group)
                     @php
-                        // Item bertanda 'admin' hanya tampil untuk admin
                         $itemTampil = collect($group['items'])->filter(fn ($i) => empty($i['admin']) || auth()->user()->isAdmin());
                     @endphp
                     @continue($itemTampil->isEmpty())
@@ -87,4 +87,27 @@
             </ul>
         </nav>
     </div>
+
+    <!-- Blok Logout / Profil di Bawah -->
+    <div class="position-absolute bottom-0 start-0 w-100 p-3 pb-4 bg-white" style="z-index: 10;">
+        <div class="bg-primary-subtle rounded-3 p-3 d-flex align-items-center justify-content-between shadow-sm transition-all hover-elevate">
+            <div class="d-flex align-items-center gap-2 overflow-hidden">
+                <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 38px; height: 38px; font-weight: bold;">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                </div>
+                <div class="overflow-hidden">
+                    <h6 class="mb-0 fs-3 fw-bold text-dark text-truncate" title="{{ auth()->user()->name }}">{{ auth()->user()->name }}</h6>
+                    <span class="fs-2 text-muted text-truncate d-block">{{ auth()->user()->isAdmin() ? 'Administrator' : 'Operator' }}</span>
+                </div>
+            </div>
+            
+            <form action="{{ route('logout') }}" method="POST" class="d-inline flex-shrink-0 ms-2">
+                @csrf
+                <button type="submit" class="btn btn-sm btn-white text-danger p-2 rounded-circle shadow-sm border border-danger-subtle d-flex align-items-center justify-content-center" title="Keluar dari sistem" data-bs-toggle="tooltip" data-bs-placement="top">
+                    <iconify-icon icon="solar:logout-3-bold-duotone" class="fs-5"></iconify-icon>
+                </button>
+            </form>
+        </div>
+    </div>
+
 </aside>

@@ -28,6 +28,8 @@ class AuthMainController extends Controller
             'user'     => Auth::user(),
             'dokumen'  => Informasi::count(),
             'tampil'   => Informasi::tampil()->count(),
+            'agenda'   => \App\Models\Agenda::count(),
+            'agendaAktif' => \App\Models\Agenda::where('status', 'Akan Datang')->count(),
             'layanan'  => $layanan,
         ]);
     }
