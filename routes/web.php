@@ -133,6 +133,9 @@ Route::middleware('auth')->group(function () {
         }
 
         // Agenda Routes
+        Route::get('agenda/template', [\App\Http\Controllers\Admin\AgendaController::class, 'template'])->name('admin.agenda.template');
+        Route::get('agenda/export', [\App\Http\Controllers\Admin\AgendaController::class, 'export'])->name('admin.agenda.export');
+        Route::post('agenda/import', [\App\Http\Controllers\Admin\AgendaController::class, 'import'])->name('admin.agenda.import');
         Route::resource('agenda', \App\Http\Controllers\Admin\AgendaController::class)->names('admin.agenda');
 
         // User Routes

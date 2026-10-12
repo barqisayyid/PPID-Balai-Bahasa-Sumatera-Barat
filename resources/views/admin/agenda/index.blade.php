@@ -12,11 +12,42 @@
                     {{ $agendas->count() }} agenda terdaftar
                 </p>
             </div>
-            <button type="button" class="btn btn-primary d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalTambah">
-                <iconify-icon icon="solar:add-circle-bold-duotone" class="fs-5 me-1"></iconify-icon> 
-                Tambah Agenda
-            </button>
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <a href="{{ route('admin.agenda.template') }}" class="btn btn-outline-success d-inline-flex align-items-center" title="Unduh template Excel untuk input massal">
+                    <iconify-icon icon="solar:file-download-bold-duotone" class="fs-5 me-1"></iconify-icon> 
+                    Template Excel
+                </a>
+                <button type="button" class="btn btn-success d-inline-flex align-items-center text-white" data-bs-toggle="modal" data-bs-target="#modalImport">
+                    <iconify-icon icon="solar:upload-track-bold-duotone" class="fs-5 me-1"></iconify-icon> 
+                    Import Excel
+                </button>
+                <a href="{{ route('admin.agenda.export') }}" class="btn btn-outline-secondary d-inline-flex align-items-center" title="Export seluruh data agenda ke file Excel">
+                    <iconify-icon icon="solar:export-bold-duotone" class="fs-5 me-1"></iconify-icon> 
+                    Export
+                </a>
+                <button type="button" class="btn btn-primary d-inline-flex align-items-center" data-bs-toggle="modal" data-bs-target="#modalTambah">
+                    <iconify-icon icon="solar:add-circle-bold-duotone" class="fs-5 me-1"></iconify-icon> 
+                    Tambah Agenda
+                </button>
+            </div>
         </div>
+
+        @if (session('import_errors') && count(session('import_errors')) > 0)
+            <div class="alert alert-warning alert-dismissible fade show mb-4" role="alert">
+                <div class="d-flex align-items-start">
+                    <iconify-icon icon="solar:danger-triangle-bold-duotone" class="fs-4 me-2 text-warning flex-shrink-0 mt-1"></iconify-icon>
+                    <div>
+                        <strong>Catatan Import:</strong> Terdapat baris yang tidak dapat diproses:
+                        <ul class="mb-0 mt-1 ps-3 small">
+                            @foreach (session('import_errors') as $err)
+                                <li>{{ $err }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="table-responsive">
             <table id="tabel-agenda" class="table table-striped align-middle w-100">
@@ -156,6 +187,50 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
                 <button type="submit" class="btn btn-primary">Simpan Agenda</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Import Excel -->
+<div class="modal fade" id="modalImport" tabindex="-1" aria-labelledby="modalImportLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form action="{{ route('admin.agenda.import') }}" method="POST" enctype="multipart/form-data" class="modal-content">
+            @csrf
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalImportLabel">Import Agenda dari File Excel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-light border d-flex align-items-start p-3 mb-3" role="alert">
+                    <iconify-icon icon="solar:info-circle-bold-duotone" class="fs-4 text-primary me-2 flex-shrink-0 mt-1"></iconify-icon>
+                    <div class="small">
+                        <strong class="text-dark">Petunjuk Pengisian:</strong>
+                        <ul class="mb-2 ps-3 mt-1 text-muted">
+                            <li>Unduh dan gunakan format template resmi agar data terbaca dengan benar.</li>
+                            <li>Kolom wajib: <strong>Nama Kegiatan</strong> dan <strong>Tanggal</strong>.</li>
+                            <li>Format tanggal: <code>YYYY-MM-DD</code> (contoh: <code>2026-10-25</code>) atau format tanggal Excel.</li>
+                            <li>Status dapat diisi <strong>Akan Datang</strong> atau <strong>Selesai</strong>.</li>
+                        </ul>
+                        <a href="{{ route('admin.agenda.template') }}" class="btn btn-sm btn-outline-success d-inline-flex align-items-center">
+                            <iconify-icon icon="solar:file-download-bold-duotone" class="me-1"></iconify-icon>
+                            Unduh Template Excel (.xlsx)
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="file_excel" class="form-label fw-semibold">Pilih File Excel / CSV <span class="text-danger">*</span></label>
+                    <input type="file" name="file" id="file_excel" class="form-control" accept=".xlsx,.xls,.csv" required>
+                    <div class="form-text">Format yang didukung: <code>.xlsx</code>, <code>.xls</code>, atau <code>.csv</code> (Maks. 5 MB)</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
+                <button type="submit" class="btn btn-success text-white d-inline-flex align-items-center">
+                    <iconify-icon icon="solar:upload-track-bold-duotone" class="me-1"></iconify-icon>
+                    Mulai Import Data
+                </button>
             </div>
         </form>
     </div>
