@@ -82,18 +82,41 @@ Route::post('/formulir/pengaduan', [FormulirController::class, 'pengaduan'])->na
 Route::post('/formulir/keberatan', [FormulirController::class, 'keberatan'])->name('main.storekeberatan');
 
 // Private Image routes
-Route::get('/images/private/{folder}/{filename}', function ($folder, $filename) {
-    // If it's a profile photo, we don't strictly need auth for this public site
-    $path = "private/images/" . $folder . "/" . $filename;
-    // Fallback if the path structure is different based on what they uploaded
-    if (!Storage::exists($path)) {
-        // Let's try alternative path just in case
-        $path = "private/" . $folder . "/" . $filename;
+Route::get('/images/private/{folder}/{filename}', function (string $folder, string $filename) {
+    // Cegah path traversal
+    if (str_contains($folder, '..') || str_contains($filename, '..') ||
+        str_contains($folder, '/') || str_contains($folder, '\\') ||
+        str_contains($filename, '/') || str_contains($filename, '\\')) {
+        abort(404);
     }
-    
-    if (!Storage::exists($path)) abort(404);
-    return response()->file(Storage::path($path));
-})->name('private.images');
+
+    $candidates = [
+        storage_path("app/private/images/{$folder}/{$filename}"),
+        storage_path("app/private/{$folder}/{$filename}"),
+        storage_path("app/images/{$folder}/{$filename}"),
+    ];
+
+    $target = null;
+    $allowedBase = realpath(storage_path('app'));
+
+    foreach ($candidates as $candidate) {
+        if (file_exists($candidate)) {
+            $real = realpath($candidate);
+            if ($real && $allowedBase && str_starts_with($real, $allowedBase)) {
+                $target = $real;
+                break;
+            }
+        }
+    }
+
+    if (!$target) {
+        abort(404);
+    }
+
+    return response()->file($target, [
+        'Cache-Control' => 'public, max-age=86400',
+    ]);
+})->where('filename', '.*')->name('private.images');
 
 
 // ==========================================
